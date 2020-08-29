@@ -11,6 +11,7 @@ services:
       - "67:67/udp"
       - "80:80/tcp"
       - "443:443/tcp"
+    dns: 127.0.0.1
     environment:
       TZ: 'Europe/Berlin'
       WEBPASSWORD: 'password'

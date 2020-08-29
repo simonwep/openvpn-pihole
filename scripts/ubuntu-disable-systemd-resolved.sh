@@ -5,7 +5,7 @@ systemctl disable systemd-resolved
 systemctl stop systemd-resolved
 
 # Switch to default dns-resolve
-echo "dns=default" >> /etc/NetworkManager/NetworkManager.conf
+sed -i "1s/.*/[main]\ndns=default/" /etc/NetworkManager/NetworkManager.conf
 
 # Remove symlink (??)
 rm /etc/resolv.conf
