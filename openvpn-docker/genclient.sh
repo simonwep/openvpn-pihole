@@ -8,18 +8,28 @@ cd /opt/app/easy-rsa
 ./easyrsa gen-req "client-$1" nopass
 ./easyrsa sign-req client "client-$1"
 
+# Certificate properties
+CA="$(cat ./pki/ca.crt )"
+CERT="$(cat ./pki/issued/client-${1}.crt | grep -zEo -e '-----BEGIN CERTIFICATE-----(\n|.)*-----END CERTIFICATE-----')"
+KEY="$(cat ./pki/private/client-${1}.key)"
+TLS_AUTH="$(cat ./pki/ta.key)"
+DEST_FILE_PATH="/opt/app/clients/$1.ovpn"
+
 # Generate and print config
 echo "$(cat /opt/app/client.conf)
 <ca>
-$(cat ./pki/ca.crt )
+$CA
 </ca>
 <cert>
-$(cat ./pki/issued/client-${1}.crt)
+$CERT
 </cert>
 <key>
-$(cat ./pki/private/client-${1}.key)
+$KEY
 </key>
 <tls-auth>
-$(cat ./pki/ta.key)
+$TLS_AUTH
 </tls-auth>
-" > "/opt/app/clients/$1.ovpn"
+" > "$DEST_FILE_PATH"
+
+echo 'OpenVPN Client configuration successfully generated!'
+echo "Checkout openvpn/clients/$1.ovpn"

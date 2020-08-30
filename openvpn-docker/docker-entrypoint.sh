@@ -15,17 +15,9 @@ if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
     # Creating the Server Certificate, Key, and Encryption Files
     echo 'Creating the Server Certificate'
     ./easyrsa gen-req server nopass
-
-    #echo 'Import request'
-    #./easyrsa import-req ./pki/reqs/server.req server
     
     echo 'Sign request'
     ./easyrsa sign-req server server
-    
-    #echo 'Copy files to /etc/openvpn'
-    #cp ./pki/private/server.key /etc/openvpn/
-    #cp ./pki/ca.crt /etc/openvpn/
-    #cp ./pki/issued/server.crt /etc/openvpn/
     
     echo 'Generate Diffie-Hellman key'
     ./easyrsa gen-dh
@@ -33,10 +25,6 @@ if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
     echo 'Generate HMAC signature'
     openvpn --genkey --secret pki/ta.key
     cp ./pki/ta.key /etc/openvpn/
-    
-    #echo 'Copy files to /etc/openvpn'
-    #cp ./ta.key /etc/openvpn/
-    #cp ./pki/dh.pem /etc/openvpn/
     
     # Copy to mounted volume
     cp -r ./pki/. /etc/openvpn/pki
