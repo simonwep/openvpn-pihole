@@ -1,1 +1,3 @@
-/etc-*
+/pihole
+/openvpn
+*.save
