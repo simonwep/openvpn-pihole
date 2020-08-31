@@ -42,7 +42,10 @@ fi
 
 echo 'Configuring networking rules...'
 echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
-sysctl -p
+sysctl -p /etc/sysctl.conf
+
+echo 'Configuring iptables...'
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
 # Copy configuration and start openvpn
 echo 'Copying configuration...'
