@@ -1,63 +1,60 @@
 version: "3.5"
 
-# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
 
-  openvpn:
-    container_name: openvpn
-    build: ./openvpn-docker
-    ports:
-      - 1194:1194/udp
-    networks:
-      vpn-net:
-        ipv4_address: 172.20.0.3
-    environment:
-      REQ_COUNTRY: US
-      REQ_PROVINCE: California
-      REQ_CITY: San Francisco
-      REQ_ORG: Copyleft Certificate Co
-      REQ_OU: My Organizational Unit
-      REQ_CN: MyOpenVPN
-    volumes:
-      - ./openvpn/pki:/etc/openvpn/pki
-      - ./openvpn/clients:/opt/app/clients
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
+    openvpn:
+        container_name: openvpn
+        build: ./openvpn-docker
+        ports:
+            - 1194:1194/udp
+        networks:
+            vpn-net:
+                ipv4_address: 172.20.0.3
+        environment:
+            REQ_COUNTRY: US
+            REQ_PROVINCE: California
+            REQ_CITY: San Francisco
+            REQ_ORG: Copyleft Certificate Co
+            REQ_OU: My Organizational Unit
+            REQ_CN: MyOpenVPN
+        volumes:
+            - ./openvpn/pki:/etc/openvpn/pki
+            - ./openvpn/clients:/opt/app/clients
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
 
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:latest
-    depends_on:
-      - "openvpn"
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp"
-      - "80:80/tcp"
-    networks:
-      vpn-net:
-        ipv4_address: 172.20.0.2
-    environment:
-      TZ: "Europe/Berlin"
-      WEBPASSWORD: "password"
-      DNS1: 208.67.222.222 # OpenDNS
-      DNS2: 208.67.220.220
-      ServerIP: 172.20.0.2
-    volumes:
-      - ./pihole/pihole:/etc/pihole
-      - ./pihole/dnsmasq.d:/etc/dnsmasq.d
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
+    pihole:
+        container_name: pihole
+        image: pihole/pihole:latest
+        depends_on:
+            - "openvpn"
+        ports:
+            - "53:53/tcp"
+            - "53:53/udp"
+            - "67:67/udp"
+            - "80:80/tcp"
+        networks:
+            vpn-net:
+                ipv4_address: 172.20.0.2
+        environment:
+            TZ: "Europe/Berlin"
+            WEBPASSWORD: "password"
+            DNS1: 208.67.222.222 # OpenDNS
+            DNS2: 208.67.220.220
+            ServerIP: 172.20.0.2
+        volumes:
+            - ./pihole/pihole:/etc/pihole
+            - ./pihole/dnsmasq.d:/etc/dnsmasq.d
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
 
 networks:
-  vpn-net:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.20.0.0/16
+    vpn-net:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.20.0.0/16
 
