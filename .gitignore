@@ -1,3 +1,6 @@
 /pihole
 /openvpn
+/.idea
+/.psd
+/.test
 *.save
