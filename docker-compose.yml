@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.5"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
@@ -8,6 +8,9 @@ services:
     build: ./openvpn-docker
     ports:
       - 1194:1194/udp
+    networks:
+      vpn-net:
+        ipv4_address: 172.20.0.3
     environment:
       REQ_COUNTRY: US
       REQ_PROVINCE: California
@@ -32,13 +35,14 @@ services:
       - "53:53/udp"
       - "67:67/udp"
       - "80:80/tcp"
-      - "443:443/tcp"
-    dns: 127.0.0.1
+    networks:
+      vpn-net:
+        ipv4_address: 172.20.0.2
     environment:
       TZ: "Europe/Berlin"
       WEBPASSWORD: 'password'
-      # WEBPASSWORD: 'set a secure password here or it will be random'
-      # Volumes store your data between container upgrades
+      DNS1: 8.8.8.8
+      DNS2: 8.8.4.4
     volumes:
       - ./pihole/pihole:/etc/pihole
       - ./pihole/dnsmasq.d:/etc/dnsmasq.d
@@ -47,3 +51,12 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
+
+networks:
+  vpn-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+

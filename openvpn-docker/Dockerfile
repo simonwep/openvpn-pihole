@@ -13,7 +13,7 @@ RUN apt-get update -y && \
 
 # Download easy-rsa
 RUN wget -q https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.7/EasyRSA-3.0.7.tgz && \
-    tar xvf EasyRSA-3.0.7.tgz && \
+    tar xf EasyRSA-3.0.7.tgz && \
     rm -f EasyRSA-3.0.7.tgz && \
     cp easy-rsa.conf ./EasyRSA-3.0.7/vars && \
     mv EasyRSA-3.0.7 easy-rsa
@@ -21,7 +21,7 @@ RUN wget -q https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.7/EasyRSA
 # Install iptables
 RUN apt-get install iptables -y
 
-EXPOSE 1194
+EXPOSE 1194/udp
 
 RUN chmod +x genclient.sh
 RUN chmod +x docker-entrypoint.sh
