@@ -1,6 +1,18 @@
 #!/bin/bash
 set -e
 
+# .ovpn file path
+DEST_FILE_PATH="/opt/app/clients/$1.ovpn"
+
+# Validate username and check for duplicates
+if  [[ -z  $1 ]]; then
+    echo 'Name cannot be empty.'
+    exit -1
+elif [[ -f $DEST_FILE_PATH ]]; then
+    echo "User with name $1 already exists under openvpn/clients."
+    exit -1
+fi
+
 export EASYRSA_BATCH=1 # see https://superuser.com/questions/1331293/easy-rsa-v3-execute-build-ca-and-gen-req-silently
 
 # Generate request
@@ -13,7 +25,6 @@ CA="$(cat ./pki/ca.crt )"
 CERT="$(cat ./pki/issued/client-${1}.crt | grep -zEo -e '-----BEGIN CERTIFICATE-----(\n|.)*-----END CERTIFICATE-----')"
 KEY="$(cat ./pki/private/client-${1}.key)"
 TLS_AUTH="$(cat ./pki/ta.key)"
-DEST_FILE_PATH="/opt/app/clients/$1.ovpn"
 
 # Generate and print config
 echo "$(cat /opt/app/client.conf)
