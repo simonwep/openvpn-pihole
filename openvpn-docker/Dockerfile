@@ -23,7 +23,7 @@ RUN apt-get install iptables -y
 
 EXPOSE 1194/udp
 
-RUN chmod +x genclient.sh
+RUN chmod +x bin/*
 RUN chmod +x docker-entrypoint.sh
 ENTRYPOINT ./docker-entrypoint.sh \
                 "$REQ_COUNTRY" \

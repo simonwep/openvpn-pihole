@@ -6,26 +6,29 @@ if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
     cd /opt/app/easy-rsa
 
     # Building the CA
-    echo 'Setting up public key infrastructure'
+    echo 'Setting up public key infrastructure...'
     ./easyrsa init-pki
 
-    echo 'Generating ertificate authority'
+    echo 'Generating ertificate authority...'
     ./easyrsa build-ca nopass
 
     # Creating the Server Certificate, Key, and Encryption Files
-    echo 'Creating the Server Certificate'
+    echo 'Creating the Server Certificate...'
     ./easyrsa gen-req server nopass
     
-    echo 'Sign request'
+    echo 'Sign request...'
     ./easyrsa sign-req server server
     
-    echo 'Generate Diffie-Hellman key'
+    echo 'Generate Diffie-Hellman key...'
     ./easyrsa gen-dh
 
-    echo 'Generate HMAC signature'
+    echo 'Generate HMAC signature...'
     openvpn --genkey --secret pki/ta.key
-    cp ./pki/ta.key /etc/openvpn/
     
+    echo 'Create certificate revocation list (CRL)...'
+    ./easyrsa gen-crl
+    chmod +r ./pki/crl.pem
+ 
     # Copy to mounted volume
     cp -r ./pki/. /etc/openvpn/pki
 else
