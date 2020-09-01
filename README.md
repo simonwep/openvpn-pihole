@@ -1,5 +1,5 @@
 <h3 align="center">
-    <img src="https://user-images.githubusercontent.com/30767528/91710366-6b804400-eb84-11ea-91a2-cb6f7e3e255a.png" alt="Logo" width="500">
+    <img src="https://user-images.githubusercontent.com/30767528/91841822-4a3a5900-ec53-11ea-92fe-4bde2acccac4.png" alt="Logo" width="500">
 </h3>
 
 <h3 align="center">
@@ -37,6 +37,8 @@ $ sudo docker-compose up -d
 
 After this is done you'll find two new folders inside of this repository - the `/openvpn` folder will contain all of your certificates as well as an easy-rsa configuration file.
 `/pihole` will contain the content of `/etc/pihole` and `/etc/dnsmasq.d`.
+
+> Until [this issue](https://github.com/moby/moby/issues/32582) has been resolved I'll be using mounted host directories for the sake of simplicity.
 
 If you want to migrate settings, or your query-database you can now copy it into the corresponding folder in `/pihole` :)
 The PiHole admin dashboard can only be reached through the vpn. If you want to change your admin-dashboard-password you can do that in the [docker-compose](docker-compose.yml) file.
