@@ -3,7 +3,7 @@
 </h3>
 
 <h3 align="center">
-    OpenVPN and PiHole wrapped up in a docker-compose setup
+    <a href="https://openvpn.net">OpenVPN</a> and <a href="https://pi-hole.net">PiHole</a> wrapped up in a docker-compose setup
 </h3>
 
 <br/>
@@ -28,7 +28,8 @@ Many thanks to the official [PiHole Docker Image](https://github.com/pi-hole/doc
 
 ### Setup
 
-Make sure you're using the latest [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/). I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml)so you'll need at least `v17.12.0` for the docker-ngine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
+Make sure you're using the latest [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/).
+I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml)so you'll need at least `v17.12.0` for the docker-ngine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
 
 After you've installed all the pre-requisites you can run.
 ```sh
@@ -44,6 +45,16 @@ If you want to migrate settings, or your query-database you can now copy it into
 The PiHole admin dashboard can only be reached through the vpn. If you want to change your admin-dashboard-password you can do that in the [docker-compose](docker-compose.yml) file.
 
 > If you're using a VPS make sure to open 1194/udp!
+
+#### Configuration
+
+
+##### OpenVPN
+Configuration files (such as [`server.conf`](openvpn/config/server.conf) and [`client.conf`](openvpn/config/client.conf)) are stored in [openvpn/config](openvpn/config).
+They get copied every time the instance gets spawned so feel free to change / update them any time.
+
+#### PiHole
+We're always using the very latest PiHole version - start the PiHole service at least once to edit configuration files manually.
 
 #### Generating `.ovpn files`
 
@@ -62,7 +73,42 @@ sudo docker exec openvpn bash /opt/app/bin/rmclient.sh <name>
 Revoked certificates won't kill active connections, you'll have to restart the service if you want the user to immediately disconnect:
 ```sh
 sudo docker-compose restart openvpn
-``` 
+```
+
+### FAQ & Receipse
+
+#### Launching multiple openvpn instances with different protocol/port config
+First copy the [openvpn](openvpn) directory including [openvpn/config](openvpn/config) (copy just the `config` folder!), then add another service to [docker-compose.yml](docker-compose.yml).
+
+Example assuming we want to name our second openvpn instance `openvpn-tcp-443`:
+```sh
+mkdir openvpn-tcp-443
+cp -r openvpn/config openvpn-tcp-443
+```
+
+You can now make changes to our new config files in `openvpn-tcp-443/config`. Change `proto` to `tcp` and `port` to `443`,
+you'll also need to comment out `explicit-exit-notify 1` as this is only compatible with `proto udp` (update both `server.conf` and `client.conf`!).
+
+Now add our new service:
+```yaml
+# ... other services
+    openvpn-tcp-443:
+        container_name: openvpn-tcp-443
+        build: ./openvpn-docker
+        ports:
+            - 443:443/tcp
+        volumes:
+            - ./openvpn/pki:/etc/openvpn/pki # Keep the PKI
+            - ./openvpn-tcp-443/clients:/etc/openvpn/clients
+            - ./openvpn-tcp-443/config:/etc/openvpn/config # !! We're using our second configuraion
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
+# ... other services
+```
+
+> Keep in mind that if you want to generate a client-config for that service  we've just made you'll 
+> have to use the openvpn-tcp-443 container e.g. `sudo docker exec openvpn-tcp-443 bash /opt/app/bin/genclient.sh <name>`.
 
 ### Troubleshooting
 
