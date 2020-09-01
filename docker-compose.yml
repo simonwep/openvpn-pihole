@@ -19,7 +19,8 @@ services:
             REQ_CN: MyOpenVPN
         volumes:
             - ./openvpn/pki:/etc/openvpn/pki
-            - ./openvpn/clients:/opt/app/clients
+            - ./openvpn/clients:/etc/openvpn/clients
+            - ./openvpn/config:/etc/openvpn/config
         cap_add:
             - NET_ADMIN
         restart: unless-stopped

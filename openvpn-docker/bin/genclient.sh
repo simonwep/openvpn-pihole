@@ -2,7 +2,7 @@
 set -e
 
 # .ovpn file path
-DEST_FILE_PATH="/opt/app/clients/$1.ovpn"
+DEST_FILE_PATH="/etc/openvpn/clients/$1.ovpn"
 
 # Validate username and check for duplicates
 if  [[ -z  $1 ]]; then
@@ -30,7 +30,7 @@ echo 'Sync pki directory...'
 cp -r ./pki/. /etc/openvpn/pki
 
 echo 'Generate .ovpn file...'
-echo "$(cat /opt/app/client.conf)
+echo "$(cat /etc/openvpn/config/client.conf)
 <ca>
 $CA
 </ca>

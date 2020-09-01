@@ -50,9 +50,6 @@ sysctl -p /etc/sysctl.conf
 echo 'Configuring iptables...'
 iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
-# Copy configuration and start openvpn
-echo 'Copying configuration...'
-cp /opt/app/server.conf /etc/openvpn
+echo 'Start openvpn process...'
+/usr/sbin/openvpn --cd /etc/openvpn --script-security 2 --config /etc/openvpn/config/server.conf
 
-echo 'Starting OpenVPN server...'
-/usr/sbin/openvpn --cd /etc/openvpn --script-security 2 --config /etc/openvpn/server.conf
