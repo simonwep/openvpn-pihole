@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://github.com/Simonwep/openvpn-pihole/actions?query=workflow%3ACI"><img
      alt="CI Status"
-     src="https://github.com/Simonwep/openvpn-pihole/CI/badge.svg"/></a>
+     src="https://github.com/Simonwep/openvpn-pihole/workflows/CI/badge.svg"/></a>
   <a href="https://github.com/sponsors/Simonwep"><img
      alt="GitHub Sponsors"
      src="https://img.shields.io/badge/GitHub-sponsor-0A5DFF.svg"></a>

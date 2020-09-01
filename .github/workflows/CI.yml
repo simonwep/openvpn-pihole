@@ -1,0 +1,12 @@
+name: CI
+
+on: "push"
+
+jobs:
+    build:
+        runs-on: ubuntu-18.04
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build ovpn image
+              run: docker-compose build openvpn
