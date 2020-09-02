@@ -5,7 +5,7 @@ set -e
 DEST_FILE_PATH="/etc/openvpn/clients/$1.ovpn"
 
 # Validate username and check for duplicates
-if  [[ -z  $1 ]]; then
+if  [[ -z $1 ]]; then
     echo 'Name cannot be empty.'
     exit -1
 elif [[ -f $DEST_FILE_PATH ]]; then
@@ -23,7 +23,18 @@ cd /opt/app/easy-rsa
 cp /etc/openvpn/config/easy-rsa.vars ./vars
 
 # Generate certificates
-./easyrsa gen-req "client-$1" nopass
+if  [[ -z $2 ]]; then
+    echo 'Without password...'
+    ./easyrsa gen-req "client-$1" nopass
+else
+    echo 'With password...'
+    # See https://stackoverflow.com/questions/4294689/how-to-generate-an-openssl-key-using-a-passphrase-from-the-command-line
+    # ... and https://stackoverflow.com/questions/22415601/using-easy-rsa-how-to-automate-client-server-creation-process
+    # ... and https://github.com/OpenVPN/easy-rsa/blob/master/doc/EasyRSA-Advanced.md
+    (echo '\n') | ./easyrsa --passin=pass:${2} --passout=pass:${2} gen-req "client-$1"
+fi
+
+# Sign request
 ./easyrsa sign-req client "client-$1"
 
 # Certificate properties
