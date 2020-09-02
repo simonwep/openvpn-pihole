@@ -59,10 +59,10 @@ We're always using the very latest PiHole version - start the PiHole service at 
 #### Generating `.ovpn files`
 
 ```sh
-sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name>
+sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <password?>
 ```
 
-You can find you `.ovpn` file under `/openvpn/clients/<name>.ovpn`, make sure to change the remote ip-address.
+You can find you `.ovpn` file under `/openvpn/clients/<name>.ovpn`, make sure to change the remote ip-address / port / protocol.
 
 #### Revoking `.ovpn files`
 
@@ -75,7 +75,7 @@ Revoked certificates won't kill active connections, you'll have to restart the s
 sudo docker-compose restart openvpn
 ```
 
-### FAQ & Receipse
+### FAQ & Recipes
 
 #### Launching multiple openvpn instances with different protocol/port config
 First copy the [openvpn](openvpn) directory including [openvpn/config](openvpn/config) (copy just the `config` folder!), then add another service to [docker-compose.yml](docker-compose.yml).
@@ -123,3 +123,7 @@ sudo systemctl stop systemd-resolved
 sudo systemctl disable systemd-resolved
 sudo systemctl mask systemd-resolved
 ```
+
+### Contributing
+
+Checkout the [contribution guidelines](.github/CONTRIBUTING.md) :)
