@@ -4,6 +4,9 @@ set -e
 if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
     export EASYRSA_BATCH=1 # see https://superuser.com/questions/1331293/easy-rsa-v3-execute-build-ca-and-gen-req-silently
     cd /opt/app/easy-rsa
+    
+    # Copy easy-rsa variables
+    cp /etc/openvpn/config/easy-rsa.vars ./vars
 
     # Building the CA
     echo 'Setting up public key infrastructure...'

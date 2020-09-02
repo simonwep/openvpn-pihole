@@ -13,7 +13,12 @@ fi
 export EASYRSA_BATCH=1 # see https://superuser.com/questions/1331293/easy-rsa-v3-execute-build-ca-and-gen-req-silently
 
 echo 'Revoke certificate...'
+
+# Copy easy-rsa variables
 cd /opt/app/easy-rsa
+cp /etc/openvpn/config/easy-rsa.vars ./vars
+
+# Revoke certificate
 ./easyrsa revoke "client-$1"
 
 echo 'Create new Create certificate revocation list (CRL)...'

@@ -14,9 +14,15 @@ elif [[ -f $DEST_FILE_PATH ]]; then
 fi
 
 export EASYRSA_BATCH=1 # see https://superuser.com/questions/1331293/easy-rsa-v3-execute-build-ca-and-gen-req-silently
+    
 
 echo 'Generate client certificate...'
+
+# Copy easy-rsa variables
 cd /opt/app/easy-rsa
+cp /etc/openvpn/config/easy-rsa.vars ./vars
+
+# Generate certificates
 ./easyrsa gen-req "client-$1" nopass
 ./easyrsa sign-req client "client-$1"
 
@@ -46,4 +52,4 @@ $TLS_AUTH
 " > "$DEST_FILE_PATH"
 
 echo 'OpenVPN Client configuration successfully generated!'
-echo "Checkout openvpn/clients/$1.ovpn"
+echo "Checkout <service-name>/clients/$1.ovpn"
