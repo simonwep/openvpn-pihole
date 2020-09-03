@@ -7,14 +7,14 @@ DEST_FILE_PATH="/etc/openvpn/clients/$1.ovpn"
 # Validate username and check for duplicates
 if  [[ -z $1 ]]; then
     echo 'Name cannot be empty.'
-    exit -1
+    exit 1
 elif [[ -f $DEST_FILE_PATH ]]; then
     echo "User with name $1 already exists under openvpn/clients."
-    exit -1
+    exit 1
 fi
 
 export EASYRSA_BATCH=1 # see https://superuser.com/questions/1331293/easy-rsa-v3-execute-build-ca-and-gen-req-silently
-    
+
 
 echo 'Generate client certificate...'
 
@@ -31,7 +31,7 @@ else
     # See https://stackoverflow.com/questions/4294689/how-to-generate-an-openssl-key-using-a-passphrase-from-the-command-line
     # ... and https://stackoverflow.com/questions/22415601/using-easy-rsa-how-to-automate-client-server-creation-process
     # ... and https://github.com/OpenVPN/easy-rsa/blob/master/doc/EasyRSA-Advanced.md
-    (echo '\n') | ./easyrsa --passin=pass:${2} --passout=pass:${2} gen-req "client-$1"
+    (echo -e '\n') | ./easyrsa --passin=pass:${2} --passout=pass:${2} gen-req "client-$1"
 fi
 
 # Sign request

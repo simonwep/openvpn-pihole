@@ -7,7 +7,7 @@ DEST_FILE_PATH="/etc/openvpn/clients/$1.ovpn"
 # Check if .ovpn file exists
 if [[ ! -f $DEST_FILE_PATH ]]; then
     echo "User not found."
-    exit -1
+    exit 1
 fi
 
 export EASYRSA_BATCH=1 # see https://superuser.com/questions/1331293/easy-rsa-v3-execute-build-ca-and-gen-req-silently
