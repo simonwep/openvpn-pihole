@@ -24,16 +24,29 @@
 </p>
 <br>
 
-Many thanks to the official [PiHole Docker Image](https://github.com/pi-hole/docker-pi-hole)!
+This project is a composition out of the official [PiHole docker image](https://github.com/pi-hole/docker-pi-hole) and a hand-crafted [openvpn-image](openvpn-docker) to set up a ready-to-use
+VPN with PiHole as dns-resolve in less than a minute. Its configuration is kept simple, you can add / remove clients and easily extend it as the configuration is stored in a centralized and easily manageable way.
+Enjoy!
+
+The main configuration for this is inspired by [mr-bolle/docker-openvpn-pihole](https://github.com/mr-bolle/docker-openvpn-pihole), [pknw1/openvpn-pihole-docker](https://github.com/pknw1/openvpn-pihole-docker)
+and [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn).
+
 
 ### Setup
+
+First clone this repository:
+
+```sh
+git clone https://github.com/Simonwep/openvpn-pihole.git
+cd openvpn-pihole
+```
 
 Make sure you're using the latest [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/).
 I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml)so you'll need at least `v17.12.0` for the docker-ngine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
 
 After you've installed all the pre-requisites you can run.
 ```sh
-$ sudo docker-compose up -d
+sudo docker-compose up -d
 ```
 
 After this is done you'll find two new folders inside of this repository - the `/openvpn` folder will contain all of your certificates as well as an easy-rsa configuration file.
@@ -46,17 +59,10 @@ The PiHole admin dashboard can only be reached through the vpn. If you want to c
 
 > If you're using a VPS make sure to open 1194/udp!
 
-#### Configuration
-
-
-##### OpenVPN
-Configuration files (such as [`server.conf`](openvpn/config/server.conf) and [`client.conf`](openvpn/config/client.conf)) are stored in [openvpn/config](openvpn/config).
-They get copied every time the instance gets spawned so feel free to change / update them any time.
-
-#### PiHole
-We're always using the very latest PiHole version - start the PiHole service at least once to edit configuration files manually.
-
 #### Generating `.ovpn files`
+
+> Before you generate any client certificate you must update the host in [client configuration](openvpn/config/client.conf).
+> This file will be used as base-configuration for each `.ovpn` file!
 
 ```sh
 sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <password?>
@@ -74,6 +80,17 @@ Revoked certificates won't kill active connections, you'll have to restart the s
 ```sh
 sudo docker-compose restart openvpn
 ```
+
+
+### Configuration
+
+#### OpenVPN
+Configuration files (such as [`server.conf`](openvpn/config/server.conf) and [`client.conf`](openvpn/config/client.conf)) are stored in [openvpn/config](openvpn/config).
+They get copied every time the instance gets spawned so feel free to change / update them any time.
+
+#### PiHole
+We're always using the very latest PiHole version - start the PiHole service at least once to edit configuration files manually.
+
 
 ### FAQ & Recipes
 
