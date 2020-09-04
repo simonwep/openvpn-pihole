@@ -8,7 +8,7 @@ RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install gnupg wget -y && \
     wget -qO - 'https://swupdate.openvpn.net/repos/repo-public.gpg' | apt-key add - && \
-    echo 'deb http://build.openvpn.net/debian/openvpn/stable focal main' > /etc/apt/sources.list.d/openvpn-aptrepo.list && \
+    echo 'deb http://build.openvpn.net/debian/openvpn/stable bionic main' > /etc/apt/sources.list.d/openvpn-aptrepo.list && \
     apt-get install openvpn -y
 
 # Download easy-rsa
