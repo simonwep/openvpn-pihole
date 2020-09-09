@@ -42,7 +42,9 @@ cd openvpn-pihole
 ```
 
 Make sure you're using the latest [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/).
-I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml)so you'll need at least `v17.12.0` for the docker-ngine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
+I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml) so you'll need at least `v17.12.0` for the docker-ngine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
+
+If you share your VPN with others it's highly recommended to change the admin password for the PiHole dashboard in the [docker-compose.yml](docker-compose.yml) file now.
 
 After you've installed all the pre-requisites you can run.
 ```sh
@@ -55,7 +57,7 @@ After this is done you'll find two new folders inside of this repository - the `
 > Until [this issue](https://github.com/moby/moby/issues/32582) has been resolved I'll be using mounted host directories for the sake of simplicity.
 
 If you want to migrate settings, or your query-database you can now copy it into the corresponding folder in `/pihole` :)
-The PiHole admin dashboard can only be reached through the vpn. If you want to change your admin-dashboard-password you can do that in the [docker-compose](docker-compose.yml) file.
+The PiHole admin dashboard can only be reached through the vpn.
 
 > If you're using a VPS make sure to open 1194/udp!
 
@@ -124,7 +126,7 @@ Now add our new service:
 # ... other services
 ```
 
-> Keep in mind that if you want to generate a client-config for that service  we've just made you'll 
+> Keep in mind that if you want to generate a client-config for that service  we've just made you'll
 > have to use the openvpn-tcp-443 container e.g. `sudo docker exec openvpn-tcp-443 bash /opt/app/bin/genclient.sh <name>`.
 
 ### Troubleshooting

@@ -16,7 +16,7 @@ RUN wget -q https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.7/EasyRSA
     tar xf EasyRSA-3.0.7.tgz && \
     rm -f EasyRSA-3.0.7.tgz && \
     mv EasyRSA-3.0.7 easy-rsa
-    
+
 # Install iptables
 RUN apt-get install iptables -y
 

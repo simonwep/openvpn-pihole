@@ -6,7 +6,7 @@
     OpenVPN Docker Image
 </h3>
 
-There is already an existing docker-image for openvpn created by (kylemanna/docker-openvpn)[https://github.com/kylemanna/docker-openvpn] - With over [180](https://github.com/kylemanna/docker-openvpn/issues) issues, 
+There is already an existing docker-image for openvpn created by (kylemanna/docker-openvpn)[https://github.com/kylemanna/docker-openvpn] - With over [180](https://github.com/kylemanna/docker-openvpn/issues) issues,
 [40](https://github.com/kylemanna/docker-openvpn/pulls) open PR's and last commit done in March 2020 I decided to tread this image as not maintained anymore, also It was a good way for me to make myself more familiar with building and setting up docker iamges so that's why I created my own.
 
 Most of its documentation can be found in the [root](https://github.com/Simonwep/openvpn-pihole) directory, if you want to run it without anything else you'll have to edit the [dns-configuration](https://github.com/Simonwep/openvpn-pihole/blob/master/openvpn-docker/server.conf#L200) (which currently points to the PiHole DNS Server) and

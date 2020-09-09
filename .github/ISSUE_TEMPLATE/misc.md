@@ -11,5 +11,5 @@ assignees: ''
  - OS (e.g. Windows 10 Pro):
  - Docker version (see `docker --version`):
  - Docker-compose version (see `docker-compose --version`):
- - PiHole-version (see dashboard, if needed): 
+ - PiHole-version (see dashboard, if needed):
  - OpenVPN-version (see `openvpn --version`, if needed):

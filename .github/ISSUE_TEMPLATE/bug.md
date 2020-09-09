@@ -25,12 +25,12 @@ Please review these questions and check them to make sure noone has asked this b
 #### Screenshots
 <!-- If applicable, add screenshots to help explain your problem. -->
 
-#### Your environment 
+#### Your environment
  - OS (e.g. Windows 10 Pro):
  - Docker version (see `docker --version`):
  - Docker-compose version (see `docker-compose --version`):
- - PiHole-version (see dashboard, if needed): 
+ - PiHole-version (see dashboard, if needed):
  - OpenVPN-version (see `openvpn --version`, if needed):
 
-#### Additional context and logs 
+#### Additional context and logs
 <!-- Put any other context about the problem and / or logs here -->

@@ -4,7 +4,7 @@ set -e
 if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
     export EASYRSA_BATCH=1 # see https://superuser.com/questions/1331293/easy-rsa-v3-execute-build-ca-and-gen-req-silently
     cd /opt/app/easy-rsa
-    
+
     # Copy easy-rsa variables
     cp /etc/openvpn/config/easy-rsa.vars ./vars
 
@@ -18,25 +18,25 @@ if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
     # Creating the Server Certificate, Key, and Encryption Files
     echo 'Creating the Server Certificate...'
     ./easyrsa gen-req server nopass
-    
+
     echo 'Sign request...'
     ./easyrsa sign-req server server
-    
+
     echo 'Generate Diffie-Hellman key...'
     ./easyrsa gen-dh
 
     echo 'Generate HMAC signature...'
     openvpn --genkey --secret pki/ta.key
-    
+
     echo 'Create certificate revocation list (CRL)...'
     ./easyrsa gen-crl
     chmod +r ./pki/crl.pem
- 
+
     # Copy to mounted volume
     cp -r ./pki/. /etc/openvpn/pki
 else
     # Copy from mounted volume
-    cp -r /etc/openvpn/pki /opt/app/easy-rsa   
+    cp -r /etc/openvpn/pki /opt/app/easy-rsa
     echo 'PKI already set up.'
 fi
 
