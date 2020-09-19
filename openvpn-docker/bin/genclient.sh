@@ -39,7 +39,7 @@ fi
 
 # Certificate properties
 CA="$(cat ./pki/ca.crt )"
-CERT="$(cat ./pki/issued/client-${1}.crt | grep -zEo -e '-----BEGIN CERTIFICATE-----(\n|.)*-----END CERTIFICATE-----')"
+CERT="$(cat ./pki/issued/client-${1}.crt | grep -zEo -e '-----BEGIN CERTIFICATE-----(\n|.)*-----END CERTIFICATE-----' | tr -d '\0')"
 KEY="$(cat ./pki/private/client-${1}.key)"
 TLS_AUTH="$(cat ./pki/ta.key)"
 
