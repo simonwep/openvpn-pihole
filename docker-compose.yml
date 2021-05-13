@@ -30,10 +30,6 @@ services:
         image: pihole/pihole:latest
         depends_on:
             - "openvpn"
-        ports:
-            - "53:53/tcp"
-            - "53:53/udp"
-            - "67:67/udp"
         networks:
             vpn-net:
                 ipv4_address: 172.20.0.2

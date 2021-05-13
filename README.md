@@ -61,7 +61,7 @@ The PiHole admin dashboard can only be reached through the vpn.
 
 > If you're using a VPS make sure to open 1194/udp!
 
-#### Generating `.ovpn files`
+#### Generating `.ovpn` files
 
 > Before you generate any client certificate you must update the host in [client configuration](openvpn/config/client.conf).
 > This file will be used as base-configuration for each `.ovpn` file!
@@ -72,7 +72,7 @@ sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <password?>
 
 You can find you `.ovpn` file under `/openvpn/clients/<name>.ovpn`, make sure to change the remote ip-address / port / protocol.
 
-#### Revoking `.ovpn files`
+#### Revoking `.ovpn` files
 
 ```sh
 sudo docker exec openvpn bash /opt/app/bin/rmclient.sh <name>
