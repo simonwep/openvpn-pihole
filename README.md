@@ -44,7 +44,7 @@ cd openvpn-pihole
 Make sure you're using the latest [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/).
 I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml) so you'll need at least `v17.12.0` for the docker-ngine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
 
-If you share your VPN with others it's highly recommended to change the admin password for the PiHole dashboard in the [docker-compose.yml](docker-compose.yml) file now.
+If you share your VPN with others it's highly recommended changing the admin password for the PiHole dashboard in the [docker-compose.yml](docker-compose.yml) file now.
 
 After you've installed all the pre-requisites you can run.
 ```sh
@@ -64,7 +64,7 @@ The PiHole admin dashboard can only be reached through the vpn.
 #### Generating `.ovpn` files
 
 > Before you generate any client certificate you must update the host in [client configuration](openvpn/config/client.conf).
-> This file will be used as base-configuration for each `.ovpn` file!
+> This file will be used as base-configuration for each `.ovpn` file! You probably at least want to change the IP address to your public one.
 
 ```sh
 sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <password?>

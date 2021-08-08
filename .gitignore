@@ -1,7 +1,6 @@
 /pihole/*
 !/pihole/keep
 /openvpn/*
-!openvpn/keep
 !openvpn/config
 /.idea
 /.psd

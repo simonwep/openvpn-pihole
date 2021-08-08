@@ -63,4 +63,4 @@ $TLS_AUTH
 " > "$DEST_FILE_PATH"
 
 echo 'OpenVPN Client configuration successfully generated!'
-echo "Checkout <service-name>/clients/$1.ovpn"
+echo "Checkout openvpn/clients/$1.ovpn"
