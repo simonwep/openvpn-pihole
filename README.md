@@ -42,7 +42,7 @@ cd openvpn-pihole
 ```
 
 Make sure you're using the latest [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/).
-I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml) so you'll need at least `v17.12.0` for the docker-ngine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
+I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml) so you'll need at least `v17.12.0` for the docker-engine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
 
 If you share your VPN with others it's highly recommended changing the admin password for the PiHole dashboard in the [docker-compose.yml](docker-compose.yml) file now.
 
