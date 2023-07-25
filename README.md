@@ -9,10 +9,10 @@
 <br/>
 
 <p align="center">
-  <a href="https://github.com/Simonwep/openvpn-pihole/actions?query=workflow%3ACI"><img
+  <a href="https://github.com/simonwep/openvpn-pihole/actions?query=workflow%3Amain"><img
      alt="CI Status"
-     src="https://github.com/Simonwep/openvpn-pihole/workflows/CI/badge.svg"/></a>
-  <a href="https://github.com/sponsors/Simonwep"><img
+     src="https://github.com/simonwep/openvpn-pihole/actions/workflows/main.yml/badge.svg"/></a>
+  <a href="https://github.com/sponsors/simonwep"><img
      alt="GitHub Sponsors"
      src="https://img.shields.io/badge/GitHub-sponsor-0A5DFF.svg"></a>
   <a href="https://www.buymeacoffee.com/aVc3krbXQ"><img
@@ -51,7 +51,7 @@ and [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn).
 First clone this repository:
 
 ```sh
-git clone https://github.com/Simonwep/openvpn-pihole.git
+git clone https://github.com/simonwep/openvpn-pihole.git
 cd openvpn-pihole
 ```
 
