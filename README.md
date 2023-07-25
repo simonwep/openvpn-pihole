@@ -31,6 +31,21 @@ Enjoy!
 The main configuration for this is inspired by [mr-bolle/docker-openvpn-pihole](https://github.com/mr-bolle/docker-openvpn-pihole), [pknw1/openvpn-pihole-docker](https://github.com/pknw1/openvpn-pihole-docker)
 and [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn).
 
+## Table of Contents
+- [Setup](#setup)
+    - [Generating `.ovpn` files](#generating-ovpn-files)
+        - [Generating a list of certificates](#generating-a-list-of-certificates)
+    - [Revoking `.ovpn` files](#revoking-ovpn-files)
+    - [Renewing certificates](#renewing-certificates)
+- [Configuration](#configuration)
+    - [OpenVPN](#openvpn)
+    - [PiHole](#pihole)
+- [FAQ & Recipes](#faq--recipes)
+    - [Launching multiple openvpn instances with different protocol/port config](#launching-multiple-openvpn-instances-with-different-protocolport-config)
+- [Troubleshooting](#troubleshooting)
+    - [Port 53 is already in use](#port-53-is-already-in-use)
+- [Contributing](#contributing)
+
 ## Setup
 
 First clone this repository:
@@ -55,8 +70,8 @@ After this is done you'll find two new folders inside of this repository - the `
 
 > Until [this issue](https://github.com/moby/moby/issues/32582) has been resolved I'll be using mounted host directories for the sake of simplicity.
 
-If you want to migrate settings, or your query-database you can now copy it into the corresponding folder in `/pihole` :)
-The PiHole admin dashboard can only be reached through the vpn.
+If you want to migrate settings or your query-database you can now copy it into the corresponding folder in `/pihole` :)
+The pihole admin dashboard can only be reached through the vpn.
 
 > If you're using a VPS make sure to open 1194/udp!
 
@@ -70,6 +85,14 @@ sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <password?>
 ```
 
 You can find you `.ovpn` file under `/openvpn/clients/<name>.ovpn`, make sure to change the remote ip-address / port / protocol.
+
+#### Generating a list of certificates
+
+This repo contains a script [genclients](genclients.sh) that can be used to generate a list of clients with the current year as suffix:
+
+```sh
+./genclients <password> <username1> [<username2> ... <usernameN>]
+```
 
 ### Revoking `.ovpn` files
 

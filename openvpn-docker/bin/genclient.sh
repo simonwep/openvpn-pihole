@@ -9,7 +9,7 @@ if  [[ -z $1 ]]; then
     echo 'Name cannot be empty.'
     exit 1
 elif [[ -f $DEST_FILE_PATH ]]; then
-    echo "User with name $1 already exists under openvpn/clients."
+    echo "User with name $1 already exists under openvpn/clients.">&2
     exit 1
 fi
 
