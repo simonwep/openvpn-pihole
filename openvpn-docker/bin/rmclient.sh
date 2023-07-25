@@ -30,5 +30,5 @@ rm -rf /etc/openvpn/pki/*
 cp -r ./pki/. /etc/openvpn/pki
 
 echo 'Done!'
-echo 'If you want to disconnect the user please restart the service using docker-compose restart openvpn.'
+echo 'If you want to disconnect the user please restart the service using docker compose restart openvpn.'
 

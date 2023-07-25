@@ -1,12 +1,11 @@
 version: "3.5"
 
 services:
-
     openvpn:
         container_name: openvpn
         build: ./openvpn-docker
         ports:
-            - 1194:1194/udp
+            - "1194:1194/udp"
         networks:
             vpn-net:
                 ipv4_address: 172.20.0.3
@@ -52,5 +51,5 @@ networks:
         ipam:
             driver: default
             config:
-                -   subnet: 172.20.0.0/16
+                - subnet: 172.20.0.0/16
 
