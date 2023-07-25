@@ -1,0 +1,12 @@
+name: Main
+
+on: "push"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image
+        run: docker compose build openvpn
