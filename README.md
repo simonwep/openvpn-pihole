@@ -33,17 +33,16 @@ and [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn).
 
 ## Table of Contents
 - [Setup](#setup)
-    - [Generating `.ovpn` files](#generating-ovpn-files)
-        - [Generating a list of certificates](#generating-a-list-of-certificates)
-    - [Revoking `.ovpn` files](#revoking-ovpn-files)
-    - [Renewing certificates](#renewing-certificates)
+  - [Generating `.ovpn` files](#generating-ovpn-files) (or a [list](#generating-a-list-of-certificates))
+  - [Revoking `.ovpn` files](#revoking-ovpn-files)
+  - [Renewing certificates](#renewing-certificates)
 - [Configuration](#configuration)
-    - [OpenVPN](#openvpn)
-    - [PiHole](#pihole)
+  - [OpenVPN](#openvpn)
+  - [PiHole](#pihole)
 - [FAQ & Recipes](#faq--recipes)
-    - [Launching multiple openvpn instances with different protocol/port config](#launching-multiple-openvpn-instances-with-different-protocolport-config)
+  - [Launching multiple openvpn instances with different protocol/port config](#launching-multiple-openvpn-instances-with-different-protocolport-config)
 - [Troubleshooting](#troubleshooting)
-    - [Port 53 is already in use](#port-53-is-already-in-use)
+  - [Port 53 is already in use](#port-53-is-already-in-use)
 - [Contributing](#contributing)
 
 ## Setup
@@ -55,12 +54,10 @@ git clone https://github.com/simonwep/openvpn-pihole.git
 cd openvpn-pihole
 ```
 
-Make sure you're using the latest [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose).
-I'm using `v3.5` for the [docker-compose.yml](docker-compose.yml), so you'll need at least `v17.12.0` for the docker-engine (see [this table](https://docs.docker.com/compose/compose-file/#compose-and-docker-compatibility-matrix)).
+> [!CAUTION]
+> If you share your VPN with others, it's highly recommended changing the admin password for the PiHole dashboard in the [docker-compose.yml](docker-compose.yml) file now.
 
-If you share your VPN with others it's highly recommended changing the admin password for the PiHole dashboard in the [docker-compose.yml](docker-compose.yml) file now.
-
-After you've installed all the pre-requisites you can run.
+After you've installed all the pre-requisites, you can run (make sure you're using the latest [docker](https://docs.docker.com/get-docker/) version):
 ```sh
 sudo docker compose up -d
 ```
@@ -68,16 +65,18 @@ sudo docker compose up -d
 After this is done you'll find two new folders inside of this repository - the `/openvpn` folder will contain all of your certificates as well as an easy-rsa configuration file.
 `/pihole` will contain the content of `/etc/pihole` and `/etc/dnsmasq.d`.
 
-> Until [this issue](https://github.com/moby/moby/issues/32582) has been resolved I'll be using mounted host directories for the sake of simplicity.
+If you want to migrate settings or your query-database, you can now copy it into the corresponding folder in `/pihole` :)
+You'll also be able to import your config as usual in the docker dashboard.
 
-If you want to migrate settings or your query-database you can now copy it into the corresponding folder in `/pihole` :)
-The pihole admin dashboard can only be reached through the vpn.
+The pihole admin dashboard can only be reached through the vpn under [http://pi.hole](http://pi.hole).
 
-> If you're using a VPS make sure to open 1194/udp!
+> [!NOTE]
+> If you're using a VPS make sure to open `1194/udp`!
 
 ### Generating `.ovpn` files
 
-> Before you generate any client certificate you must update the host in [client configuration](openvpn/config/client.conf).
+> [!WARNING]
+> Before you generate any client certificate, you must update the host in [client configuration](openvpn/config/client.conf).
 > This file will be used as base-configuration for each `.ovpn` file! You probably at least want to change the IP address to your public one.
 
 ```sh
@@ -114,7 +113,7 @@ After restarting the service, a new CA will be generated.
 ```sh
 docker compose down
 rm -rf ./openvpn/pki
-docker compose down -d
+docker compose up -d
 ```
 
 Keep in mind, that after that you have to re-generate all `.ovpn`-files.
@@ -128,7 +127,8 @@ They get copied every time the instance gets spawned so feel free to change / up
 
 ### PiHole
 
-We're always using the very latest PiHole version - start the PiHole service at least once to edit configuration files manually.
+We're always using the very latest PiHole version.
+Start the PiHole service at least once to edit configuration files manually.
 
 ## FAQ & Recipes
 

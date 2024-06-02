@@ -12,7 +12,7 @@ if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
   echo 'Setting up public key infrastructure...'
   ./easyrsa init-pki
 
-  echo 'Generating ertificate authority...'
+  echo 'Generating certificate authority...'
   ./easyrsa build-ca nopass
 
   # Creating the Server Certificate, Key, and Encryption Files
@@ -26,7 +26,7 @@ if [[ ! -f /etc/openvpn/pki/ca.crt ]]; then
   ./easyrsa gen-dh
 
   echo 'Generate HMAC signature...'
-  openvpn --genkey --secret pki/ta.key
+  openvpn --genkey secret pki/ta.key
 
   echo 'Create certificate revocation list (CRL)...'
   ./easyrsa gen-crl

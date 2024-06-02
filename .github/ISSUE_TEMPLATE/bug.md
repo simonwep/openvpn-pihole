@@ -11,7 +11,7 @@ assignees: ''
 Please review these questions and check them to make sure noone has asked this before:
  - [ ] I'm using the latest version (you pulled the latest version of this repository)
  - [ ] I've searched through all the issues (if any) for this bug
- - [ ] I've checked out the [FAQ](https://github.com/Simonwep/openvpn-pihole#faq--recipes) section
+ - [ ] I've checked out the [FAQ](https://github.com/simonwep/openvpn-pihole#faq--recipes) section
 
 #### What is the current behavior?
 <!-- A clear and concise description of what the bug is. -->
