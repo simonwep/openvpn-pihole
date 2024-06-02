@@ -19,6 +19,8 @@ RUN apt-get install iptables -y
 
 EXPOSE 1194/udp
 
+HEALTHCHECK CMD pgrep openvpn || exit 1
+
 RUN chmod +x bin/*
 RUN chmod +x docker-entrypoint.sh
 ENTRYPOINT ./docker-entrypoint.sh
