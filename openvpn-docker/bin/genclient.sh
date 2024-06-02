@@ -46,7 +46,7 @@ echo 'Sync pki directory...'
 cp -r ./pki/. /etc/openvpn/pki
 
 echo 'Generate .ovpn file...'
-echo "$(cat /etc/openvpn/config/client.conf)
+echo "$(grep -vE '^#|^$|^;' /etc/openvpn/config/client.conf)
 <ca>
 $CA
 </ca>

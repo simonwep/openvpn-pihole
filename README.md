@@ -80,26 +80,18 @@ The pihole admin dashboard can only be reached through the vpn under [http://pi.
 > This file will be used as base-configuration for each `.ovpn` file! You probably at least want to change the IP address to your public one.
 
 ```sh
-sudo docker exec openvpn bash /opt/app/bin/genclient.sh <name> <password?>
-```
-
-You can find you `.ovpn` file under `/openvpn/clients/<name>.ovpn`, make sure to change the remote ip-address / port / protocol.
-
-#### Generating a list of certificates
-
-This repo contains a script [genclients](genclients.sh) that can be used to generate a list of clients with the current year as suffix:
-
-```sh
-./genclients <password> <username1> [<username2> ... <usernameN>]
+./clients.sh add <password> <names...>
 ```
 
 ### Revoking `.ovpn` files
 
 ```sh
-sudo docker exec openvpn bash /opt/app/bin/rmclient.sh <name>
+./clients.sh remove <name>
 ```
 
-Revoked certificates won't kill active connections, you'll have to restart the service if you want the user to immediately disconnect:
+> [!WARNING]
+> Revoked certificates won't kill active connections, you'll have to restart the service if you want the user to immediately disconnect:
+
 ```sh
 sudo docker compose restart openvpn
 ```
