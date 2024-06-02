@@ -75,7 +75,7 @@ The pihole admin dashboard can only be reached through the vpn under [http://pi.
 
 ### Generating `.ovpn` files
 
-> [!WARNING]
+> [!NOTE]
 > Before you generate any client certificate, you must update the host in [client configuration](openvpn/config/client.conf).
 > This file will be used as base-configuration for each `.ovpn` file! You probably at least want to change the IP address to your public one.
 

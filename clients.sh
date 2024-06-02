@@ -4,10 +4,11 @@ SCRIPT_NAME='./clients'
 
 # Function to add clients
 add_clients() {
+  local username_suffix=$(date +%Y)
   local password=$1
   shift
   for name in "$@"; do
-    sudo docker exec openvpn bash /opt/app/bin/genclient.sh "$name" "$password"
+    sudo docker exec openvpn bash /opt/app/bin/genclient.sh "$name-$username_suffix" "$password"
   done
 }
 
