@@ -17,6 +17,7 @@ services:
     devices:
       - /dev/net/tun
 
+  # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
@@ -27,13 +28,11 @@ services:
         ipv4_address: 172.20.0.2
     environment:
       TZ: "Europe/Berlin"
-      WEBPASSWORD: "password"
-      DNS1: 1.1.1.1 # Cloudflare
-      DNS2: 8.8.8.8 # Google
-      ServerIP: 172.20.0.2
+      FTLCONF_webserver_api_password: "password"
+      FTLCONF_dns_listeningMode: "all"
+      FTLCONF_dns_upstreams: "1.1.1.1;8.8.8.8" # Cloudflare and Google
     volumes:
-      - ./pihole/pihole:/etc/pihole
-      - ./pihole/dnsmasq.d:/etc/dnsmasq.d
+      - './pihole/pihole:/etc/pihole'
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
