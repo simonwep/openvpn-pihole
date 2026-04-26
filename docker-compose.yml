@@ -20,7 +20,7 @@ services:
   # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
   pihole:
     container_name: pihole
-    image: pihole/pihole:latest
+    image: pihole/pihole:2026.04.1
     depends_on:
       - "openvpn"
     networks:
@@ -36,6 +36,11 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "dig", "+short", "+norecurse", "+retry=0", "@127.0.0.1", "pi.hole"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 networks:
   vpn-net:
@@ -43,5 +48,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.20.0.0/24
 
