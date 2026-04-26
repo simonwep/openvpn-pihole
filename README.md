@@ -18,9 +18,9 @@
   <a href="https://www.buymeacoffee.com/aVc3krbXQ"><img
      alt="Buy me a Coffee"
      src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-donate-FF813F.svg"></a>
-  <a href="https://www.patreon.com/simonwep"><img
-     alt="Support on Patreon"
-     src="https://img.shields.io/badge/Patreon-support-FA8676.svg"></a>
+  <a href="https://ko-fi.com/simonwep"><img
+     alt="Support me on Ko-Fi"
+     src="https://img.shields.io/badge/KoFi-support-FA8676.svg"></a>
 </p>
 <br>
 
