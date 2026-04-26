@@ -29,5 +29,8 @@ echo 'Sync pki directory...'
 rm -rf /etc/openvpn/pki/*
 cp -r ./pki/. /etc/openvpn/pki
 
+echo 'Remove .ovpn file...'
+rm -f "$DEST_FILE_PATH"
+
 echo 'Done!'
 echo 'If you want to disconnect the user please restart the service using docker compose restart openvpn.'

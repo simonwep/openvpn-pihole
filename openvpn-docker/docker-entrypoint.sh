@@ -47,11 +47,20 @@ if [ ! -c /dev/net/tun ]; then
 fi
 
 echo 'Configuring networking rules...'
-echo 'net.ipv4.ip_forward=1' >>/etc/sysctl.conf
+if ! grep -q 'net.ipv4.ip_forward=1' /etc/sysctl.conf; then
+  echo 'net.ipv4.ip_forward=1' >>/etc/sysctl.conf
+fi
 sysctl -p /etc/sysctl.conf
 
 echo 'Configuring iptables...'
-iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+
+# Auto-detect the default outgoing network interface
+DEFAULT_IF=$(ip route show default | awk '/default/ {print $5}' | head -1)
+DEFAULT_IF=${DEFAULT_IF:-eth0}
+
+# Flush existing NAT rules to avoid duplicates on restart
+iptables -t nat -F POSTROUTING
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o "$DEFAULT_IF" -j MASQUERADE
 
 echo 'Start openvpn process...'
-/usr/sbin/openvpn --cd /etc/openvpn --script-security 2 --config /etc/openvpn/config/server.conf
+exec /usr/sbin/openvpn --cd /etc/openvpn --script-security 2 --config /etc/openvpn/config/server.conf

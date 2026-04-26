@@ -27,10 +27,10 @@ if [[ -z $2 ]]; then
   ./easyrsa --batch gen-req "client-$1" nopass
 else
   echo 'With password...'
-  # See https://stackoverflow.com/questions/4294689/how-to-generate-an-openssl-key-using-a-passphrase-from-the-command-line
-  # ... and https://stackoverflow.com/questions/22415601/using-easy-rsa-how-to-automate-client-server-creation-process
-  # ... and https://github.com/OpenVPN/easy-rsa/blob/master/doc/EasyRSA-Advanced.md
-  (echo -e '\n') | ./easyrsa --batch --passin=pass:${2} --passout=pass:${2} gen-req "client-$1"
+  export EASYRSA_PASSIN="pass:${2}"
+  export EASYRSA_PASSOUT="pass:${2}"
+  (echo -e '\n') | ./easyrsa --batch gen-req "client-$1"
+  unset EASYRSA_PASSIN EASYRSA_PASSOUT
 fi
 
 # Sign request
